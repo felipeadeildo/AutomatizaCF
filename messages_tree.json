@@ -1,0 +1,20 @@
+{
+    "state": {
+        "init": {
+            "action": "send_message",
+            "params": {
+                "message": "Bem vindo ao centro de atendimento automatizado do Colégio Fantástico.\n\nEnvie em que este bot pode lhe ser útil.",
+                "preview_url": false
+            },
+            "next_state": "forward_messages_to_telegram"
+        },
+
+        "forward_messages_to_telegram": {
+            "action": "forward_messages_to_telegram",
+            "params": {
+                "chat_id": "5268512407"
+            },
+            "next_state": "forward_messages_to_telegram"
+        }
+    }
+}
