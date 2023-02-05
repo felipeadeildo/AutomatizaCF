@@ -2,6 +2,7 @@ from flask import Flask, request
 from database.utils import load_db
 from functions.chat import ChatBot
 from telebot import TeleBot
+from json import dumps
 
 class APIListener:
     def __init__(self, enviroment_vars:dict, telegram_bot:TeleBot) -> None:
@@ -31,6 +32,7 @@ class APIListener:
                     
                 for change in entry['changes']:
                     if change['field'] == 'messages' and change.get('statuses') is None and change['value'].get("messages") is not None:
+                        print(dumps(change['value'], indent=4), end="\n\n")
                         ChatBot(change['value'], platform='whatsapp', enviroment_vars=self.env_vars, telegram_bot=self.telegram_bot)
             return 'Ok.'
         
