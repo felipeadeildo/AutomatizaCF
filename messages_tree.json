@@ -16,5 +16,10 @@
             },
             "next_state": "forward_messages_to_telegram"
         }
+    },
+    "message_format": {
+        "agenda": {
+            "content": "Olá |first_name|",
+            "preview_url": false
     }
 }
