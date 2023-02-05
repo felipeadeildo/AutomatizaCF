@@ -8,7 +8,7 @@ class TaskListener:
     def __init__(self, enviroment_vars:dict) -> None:
         self.env_vars = enviroment_vars
         while True:
-            sleep(self.env_vars.get("TASKS_DELAY"))
+            sleep(float(self.env_vars.get("TASKS_DELAY")))
             self.conn = load_db(self.env_vars)
             columns = ['task_id', 'user_id', 'platform', 'message_type', 'first_name']
             tasks = self.conn.execute(f"SELECT {', '.join(columns)} FROM tasks WHERE done = 0").fetchall()
@@ -26,7 +26,7 @@ class TaskListener:
         return message_raw
     
     def send_message(self, task:dict):
-        wrapper: Wrapper = task.get("platform")(self.env_vars)
+        wrapper: Wrapper = wrappers_map.get(task.get("platform"))(self.env_vars)
         message = self.format_message(task)
         wrapper.send_message(user=task.get("user_id"), message=message, preview_url=self.preview_url)
     
