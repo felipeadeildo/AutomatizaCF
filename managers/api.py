@@ -12,7 +12,7 @@ class APIListener:
     
     def wa_subscribe(self, args_data):
         if args_data.get("hub.verify_token") != self.env_vars.get("WA_TOKEN_SUBSCRIBE"):
-            return 'Permission Deinied'
+            return 'Permission Denied'
         else:
             return args_data.get('hub.challenge')
     
