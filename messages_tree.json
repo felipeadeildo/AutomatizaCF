@@ -21,5 +21,12 @@
         "agenda": {
             "content": "Olá |first_name|",
             "preview_url": false
+        },
+        "command_doesnt_exists": {
+            "content": "O comando |command| não existe."
+        },
+        "rotina": {
+            "content": "--- *Nossa Rotina* ---\n\n_PASSARINHOS E GIRAFINHAS_\n6h30 às 8h - Acolhimento\n8h às 9h - Tarefas Escolares\n9hàs 9h30 - Lanche + Higiene Bucal\n9h30 às 10h30 - Oficinas + Brincadeiras Livres\n10h30 às 11h30 - Banho\n11h30 às 12h30 - Almoço + Higiene Bucal\n12h30 às 13h Repouso\n13h às 14h - Tarefas Escolares\n14h às 15h - Banho\n15h às 15h30 - Lanche + Higiene Bucal\n15h30 às 16h30 - Oficinas\n16h30 às 17h30 - Brincadeiras Livres\n17h30 às 18h - Jantar + Higiene Bucal\n18h às 18h30 - Repouso\n\n_URSINHOS_\n6h30 às 8h - Acolhimento\n8h às 9h - Tarefas Escolares\n9hàs 9h30 - Lanche + Higiene Bucal\n9h30 às 10h30 - Oficinas + Brincadeiras Livres\n10h30 às 11h30 - Banho\n11h30 às 12h30 - Almoço + Higiene Bucal\n12h30 às 13h Repouso\n13h às 14h - Tarefas Escolares\n14h às 15h - Banho\n15h às 15h30 - Lanche + Higiene Bucal\n15h30 às 16h30 - Oficinas\n16h30 às 17h30 - Brincadeiras Livres\n17h30 às 18h - Jantar + Higiene Bucal\n18h às 18h30 - Repouso"
+        }
     }
 }
