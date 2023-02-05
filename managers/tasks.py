@@ -1,6 +1,6 @@
 from database.utils import load_db
 from time import sleep
-from json import load_js
+from json import load as load_js
 from wrappers import wrappers_map, Wrapper
 
 
@@ -11,7 +11,10 @@ class TaskListener:
             sleep(float(self.env_vars.get("TASKS_DELAY")))
             self.conn = load_db(self.env_vars)
             columns = ['task_id', 'user_id', 'platform', 'message_type', 'first_name']
-            tasks = self.conn.execute(f"SELECT {', '.join(columns)} FROM tasks WHERE done = 0").fetchall()
+            try:
+                tasks = self.conn.execute(f"SELECT {', '.join(columns)} FROM tasks WHERE done = 0").fetchall()
+            except:
+                continue
             tasks = [
                 {key:value for key, value in zip(columns, task)} for task in tasks
             ]
