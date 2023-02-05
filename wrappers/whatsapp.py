@@ -42,3 +42,30 @@ class Whatsapp(Wrapper):
         if 'error' in response.keys():
             raise Exception(response['error'])
         return response['messages'][0]['id']
+    
+    def send_file(self, user: str, file_url: str, file_type: str):
+        _payload = {
+            "messaging_product": "whatsapp",
+            "to": user,
+            "type": file_type,
+            file_type: {
+                "link" : file_url,
+            }
+        }
+        
+        response = self.session.post(self.env_vars.get("WA_API_MESSAGES"), json=_payload).json()
+        if 'error' in response.keys():
+            raise Exception(response['error'])
+        return response['messages'][0]['id']
+    
+    def mark_as_read(self, user: str, message_id: str):
+        _payload = {
+            "messaging_product": "whatsapp",
+            "status": "read",
+            "message_id": message_id,
+        }
+        
+        response = self.session.post(self.env_vars.get("WA_API_MESSAGES"), json=_payload).json()
+        if 'error' in response.keys():
+            raise Exception(response['error'])
+        return response
