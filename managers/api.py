@@ -28,7 +28,7 @@ class APIListener:
                 for entry in json_data['entry']:
                     if entry.get('changes') is None:
                         continue
-                
+                    
                 for change in entry['changes']:
                     if change['field'] == 'messages' and change.get('statuses') is None and change['value'].get("messages") is not None:
                         ChatBot(change['value'], platform='whatsapp', enviroment_vars=self.env_vars, telegram_bot=self.telegram_bot)

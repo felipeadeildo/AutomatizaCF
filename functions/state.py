@@ -34,8 +34,8 @@ class StateProcess:
                     f"{message['text']['body']}"
                     )
                 message_telegram = self.telegram_bot.send_message(chat_id, message, "HTML")
-                self.conn.execute("insert into relationed_messages (from_user_id, platform, state, tg_msg_id) values (?, ?, ?, ?)", (self.invoker.user_id, self.invoker.platform, self.invoker.state, message_telegram.message_id))
+                self.conn.execute("insert into relationed_messages (from_user_id, platform, state, tg_msg_id) values (%s, %s, %s, %s)", (self.invoker.user_id, self.invoker.platform, self.invoker.state, message_telegram.message_id))
                 self.conn.commit()
-        self.conn.execute("UPDATE general_users SET state = ?, first_name = ? WHERE user_id = ? AND platform = ?", (current_state.get('next_state'), self.invoker.first_name, self.invoker.user_id, self.invoker.platform))
+        self.conn.execute("UPDATE general_users SET state = %s, first_name = %s WHERE user_id = %s AND platform = %s", (current_state.get('next_state'), self.invoker.first_name, self.invoker.user_id, self.invoker.platform))
         self.conn.commit()
         self.conn.close()

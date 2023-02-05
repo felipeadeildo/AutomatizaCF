@@ -28,8 +28,8 @@ class MessageHandler:
     
 
     def retrieve_message_info(self):
-        db_local = load_db(self.enviroment_vars["DB_PATH"])
-        setor_info = db_local.execute("select  setor_id, setor_name, setor_users from setores where group_id = ?", (self.message.chat.id, )).fetchone()
+        db_local = load_db(self.enviroment_vars)
+        setor_info = db_local.execute("select  setor_id, setor_name, setor_users from setores where group_id = %s", (self.message.chat.id, )).fetchone()
         if setor_info is None and self.message.chat.type != 'private':
             return leave_group(self.message)
         if self.message.chat.type == 'private':
@@ -38,7 +38,7 @@ class MessageHandler:
         self.setor._id, self.setor.name, self.setor.users = setor_info
         self.setor.users = self.setor.users.split()
         
-        user_info = db_local.execute("select username, role, permission_level, email, telefone from workspace_users where tg_user_id = ?", (self.message.from_user.id, )).fetchone()
+        user_info = db_local.execute("select username, role, permission_level, email, telefone from workspace_users where tg_user_id = %s", (self.message.from_user.id, )).fetchone()
         if user_info is None:
             return #TODO: Adicioar um certo aviso aqui, não sei
         self.invoker:WorkspaceUser = WorkspaceUser()
@@ -46,7 +46,7 @@ class MessageHandler:
         
         if self.message.reply_to_message is None:
             return
-        relationed_message = db_local.execute("select from_user_id, platform, state from relationed_messages where tg_msg_id = ?", (self.message.reply_to_message.message_id, )).fetchone()
+        relationed_message = db_local.execute("select from_user_id, platform, state from relationed_messages where tg_msg_id = %s", (self.message.reply_to_message.message_id, )).fetchone()
         if relationed_message is None:
             return
         self.relationed_message = RelationedMessage(relationed_message[0], relationed_message[1], relationed_message[2], self.enviroment_vars)
