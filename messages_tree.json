@@ -8,7 +8,6 @@
             },
             "next_state": "forward_messages_to_telegram"
         },
-
         "forward_messages_to_telegram": {
             "action": "forward_messages_to_telegram",
             "params": {

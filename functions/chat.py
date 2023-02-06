@@ -1,4 +1,4 @@
-from database.utils import load_db
+from database.utils import load_db, sanitize_user_id
 from database.types import GeneralUser
 from wrappers import wrappers_map, Wrapper
 from json import load as load_jsonfile
@@ -22,7 +22,7 @@ class ChatBot:
 
     def retrieve_invoker(self, platform:str):
         self.invoker = GeneralUser()
-        self.invoker.user_id = self.messages_infos['messages'][0]['from']
+        self.invoker.user_id = sanitize_user_id(self.messages_infos['messages'][0]['from'])
         self.invoker.phone_number_id = self.messages_infos['metadata']['phone_number_id']
         
         conn = load_db(self.env_vars)

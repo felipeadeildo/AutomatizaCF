@@ -1,4 +1,5 @@
 import MySQLdb
+import re
 
 class ResponseQuery:
     def __init__(self, cur) -> None:
@@ -27,3 +28,22 @@ class MySQL:
 
 def load_db(enviroment_vars:dict):
     return MySQL(enviroment_vars)
+
+def sanitize_user_id(user_id:int|str, platform:str):
+    if platform == 'whatsapp':
+        user_id = re.sub(r'[-()\s.+]', "", user_id)
+        # number_size = len(user_id)
+        if user_id[3:5] == '99':
+            user_id = user_id.replace("99", "9", 1)
+        # if tam_number == 8:
+        #     user_id = f"55829{user_id}"
+        # elif tam_number == 9:
+        #     user_id = f"5582{user_id}"
+        # if number_size == 11:
+        #     user_id = f"55{user_id}"
+        # elif number_size == 13:
+        #     user_id = user_id
+        # else:
+        #     user_id = None
+    # TODO: Add elif platform == 'instagram';
+    return user_id
