@@ -10,7 +10,10 @@ class ResponseQuery:
 
 
 class MySQL:
-    def __init__(self, enviroment_vars:dict) -> None:
+    def __init__(self, enviroment_vars:dict=None) -> None:
+        if enviroment_vars is None:
+            from dotenv import dotenv_values
+            enviroment_vars = dotenv_values()
         self.conn = MySQLdb.connect(
             host=enviroment_vars.get("DB_HOST"),
             port=int(enviroment_vars.get("DB_PORT")),
