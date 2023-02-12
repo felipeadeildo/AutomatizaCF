@@ -15,6 +15,7 @@ class ChatBot:
         self.platform(self.env_vars).mark_as_read(self.invoker.user_id, self.messages_infos["messages"][0]["id"])
         self.messages_tree = load_jsonfile(open(self.env_vars.get("MESSAGES_TREE_PATH"), "r", encoding="utf-8"))
         self.telegram_bot = telegram_bot
+        # TODO: Case type is "image" or others.
         if self.messages_infos['messages'][0]['text']['body'].startswith(self.env_vars.get("COMMAND_PREFIX")):
             self.execute_command()
         else:
@@ -22,7 +23,7 @@ class ChatBot:
 
     def retrieve_invoker(self, platform:str):
         self.invoker = GeneralUser()
-        self.invoker.user_id = sanitize_user_id(self.messages_infos['messages'][0]['from'])
+        self.invoker.user_id = sanitize_user_id(self.messages_infos['messages'][0]['from'], platform)
         self.invoker.phone_number_id = self.messages_infos['metadata']['phone_number_id']
         
         conn = load_db(self.env_vars)
@@ -58,12 +59,14 @@ class ChatBot:
         else:
             size = '1024x1024'
         prompt = " ".join(self.args)
+        self.platform = self.platform(self.env_vars)
         try:
             image = openai.Image.create(prompt=prompt, n=1, size=size)
-        except:
-            pass
+        except Exception as e:
+            prompt = f"Traduza o texto a seguir: {str(e)}"
+            completation = openai.Completion.create(engine="text-davinci-003", prompt=prompt, temperature=0.9, max_tokens=4000, n=1, stop=None)
+            self.platform.send_message(self.invoker.user_id, completation.choices[0].text)
         else:
-            self.platform = self.platform(self.env_vars)
             self.platform.send_file(self.invoker.user_id, image["data"][0]["url"], "image")
     
     def command_doesnt_exists(self):

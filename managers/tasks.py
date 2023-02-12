@@ -45,5 +45,5 @@ class TaskListener:
         messages_tree = load_js(open(self.env_vars.get("MESSAGES_TREE_PATH"), encoding="utf-8"))
         message_raw = messages_tree['message_format'][message_type]["content"]
         self.preview_url = messages_tree["message_format"][message_type]['preview_url']
-        # TODO: Regex line to get keys bwtwen {} to format
+        # TODO: Regex line to get keys betwen {} to format
         return (message_raw, []) # (messaga_raw, [key_to_formart])
