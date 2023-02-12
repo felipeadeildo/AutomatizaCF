@@ -4,6 +4,7 @@ from telebot import TeleBot
 from managers.tg import TelegramListener
 from managers.api import APIListener
 from managers.tasks import TaskListener
+import flask_app
 
 class Main:
     def __init__(self) -> None:
@@ -12,13 +13,16 @@ class Main:
         self.start_managers()
     
     def start_managers(self):
-        thread = Thread(target=TelegramListener, args=(self.enviroment, self.telegram_bot))
-        thread.start()
-        
         thread = Thread(target=APIListener, args=(self.enviroment, self.telegram_bot))
         thread.start()
         
+        thread = Thread(target=TelegramListener, args=(self.enviroment, self.telegram_bot))
+        thread.start()
+        
         thread = Thread(target=TaskListener, args=(self.enviroment, ))
+        thread.start()
+        
+        thread = Thread(target=flask_app.start, args=(self.enviroment, ))
         thread.start()
 
 if __name__ == '__main__':
